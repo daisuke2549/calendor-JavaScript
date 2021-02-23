@@ -20,7 +20,7 @@ console.clear();
               isDisabled:true,
            });
        }
-       console.log(dates);
+       return dates;
    }
 
 
@@ -37,9 +37,35 @@ console.clear();
                 isDisabled:false,
             });
         }
-        console.log(dates);
+        return dates;
     }
 
-    getCalendarHead()
-    // getCalendarBody()
+    function getCalendarTail(){
+        const dates =[];
+        const lastDay = new Date(year, month + 1, 0).getDay();
+
+        for (let i = 1; i < 7 - lastDay; i++){
+            dates.push({
+                date: i,
+                isToday:false,
+                isDisabled:false,
+    });
+    }
+    return dates;
+}
+
+
+   function createCalendar(){
+       const dates = [
+        getCalendarHead(),
+        getCalendarBody(),
+        getCalendarTail()
+   
+       ];
+    console.log(dates);
+   }
+   
+
+  createCalendar();
+
 }
