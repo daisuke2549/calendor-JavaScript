@@ -4,8 +4,8 @@ console.clear();
 
 
 {
-    const year = 2020;
-    const month = 4;  //５月
+    let year = 2020;
+    let month = 4;  //５月
 
    function getCalendarHead(){
        const dates = [];
@@ -67,11 +67,45 @@ console.clear();
      for(let i = 0; i < weeksCount; i ++){
          weeks.push(dates.splice(0,7));
      }
+
+     weeks.forEach(week => {
+        const tr = document.createElement('tr');
+        week.forEach(date => {
+          const td = document.createElement('td');
+  
+          td.textContent = date.date;
+          if (date.isToday) {
+            td.classList.add('today');
+          }
+          if (date.isDisabled) {
+            td.classList.add('disabled');
+          }
+  
+          tr.appendChild(td);
+        });
+        document.querySelector('tbody').appendChild(tr);
+      });
+    }
     
-    console.log(weeks);
-   }
-   
 
-  createCalendar();
+    document.getElementById('prev').addEventListener('click',() =>{
+          month--;
+          if (month < 0){
+              year--;
+              month = 11;
+          }
+        createCalendar();
+    });
 
-}
+    document.getElementById('next').addEventListener('click',() =>{
+        month--;
+        if (month > 11){
+            year++;
+            month = 0;
+        }
+      createCalendar();
+  });
+
+  
+    createCalendar();
+  }
