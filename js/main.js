@@ -55,37 +55,46 @@ console.clear();
 }
 
 
-   function createCalendar(){
-       const dates = [
-        getCalendarHead(),
-        getCalendarBody(),
-        getCalendarTail()
-       ];
-     const weeks = [];
-     const weeksCount = dates.length / 7; 
+function createCalendar() {
+  const tbody = document.querySelector('tbody');
 
-     for(let i = 0; i < weeksCount; i ++){
-         weeks.push(dates.splice(0,7));
-     }
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
 
-     weeks.forEach(week => {
-        const tr = document.createElement('tr');
-        week.forEach(date => {
-          const td = document.createElement('td');
-  
-          td.textContent = date.date;
-          if (date.isToday) {
-            td.classList.add('today');
-          }
-          if (date.isDisabled) {
-            td.classList.add('disabled');
-          }
-  
-          tr.appendChild(td);
-        });
-        document.querySelector('tbody').appendChild(tr);
-      });
-    }
+  const title = `${year}/${String(month + 1).padStart(2, '0')}`;
+  document.getElementById('title').textContent = title;
+
+  const dates = [
+    ...getCalendarHead(),
+    ...getCalendarBody(),
+    ...getCalendarTail(),
+  ];
+  const weeks = [];
+  const weeksCount = dates.length / 7;
+
+  for (let i = 0; i < weeksCount; i++) {
+    weeks.push(dates.splice(0, 7));
+  }
+
+  weeks.forEach(week => {
+    const tr = document.createElement('tr');
+    week.forEach(date => {
+      const td = document.createElement('td');
+
+      td.textContent = date.date;
+      if (date.isToday) {
+        td.classList.add('today');
+      }
+      if (date.isDisabled) {
+        td.classList.add('disabled');
+      }
+
+      tr.appendChild(td);
+    });
+    document.querySelector('tbody').appendChild(tr);
+  });
+}
     
 
     document.getElementById('prev').addEventListener('click',() =>{
